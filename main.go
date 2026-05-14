@@ -14,9 +14,9 @@ import (
 const (
 	defaultPort    = "8080"
 	defaultTimeout = 30 * time.Second
-	readTimeout    = 15 * time.Second
-	writeTimeout   = 30 * time.Second
-	idleTimeout    = 60 * time.Second
+	readTimeout    = 30 * time.Second // increased from 15s to handle slower clients
+	writeTimeout   = 60 * time.Second // increased from 30s for larger proxied responses
+	idleTimeout    = 120 * time.Second // increased from 60s to reduce reconnect overhead
 )
 
 // version is set at build time via ldflags.
