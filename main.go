@@ -50,8 +50,10 @@ func main() {
 	}()
 
 	// Wait for interrupt signal to gracefully shut down the server.
+	// Also handle SIGHUP so the process can be signalled without killing it
+	// (useful when running under systemd or in a tmux session).
 	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 	<-quit
 
 	log.Println("shutting down server...")
